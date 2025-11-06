@@ -16,7 +16,12 @@ public class Program
         builder.Services.AddOpenApi();
 
 
-        builder.Services.AddSingleton(_ => new DatabaseIntializer(builder.Configuration.GetConnectionString("DatabaseConnection")!));
+        builder.Services.AddSingleton(
+            _ => new DatabaseInitializer(builder.Configuration.GetConnectionString("DatabaseConnection")!));
+        
+        builder.Services.AddSingleton(
+            _ => new PostgresDbInitializer(builder.Configuration.GetConnectionString("PostgresConnection")!));
+
 
         var app = builder.Build();
 
@@ -50,8 +55,12 @@ public class Program
         .WithName("GetWeatherForecast");
 
 
-        var databaseIntiliazer = app.Services.GetRequiredService<DatabaseIntializer>();
-        databaseIntiliazer.IntializeDbAsync();
+        var databaseInitializer = app.Services.GetRequiredService<DatabaseInitializer>();
+        databaseInitializer.InitializeDbAsync();
+        
+        
+        var postgresInitializer = app.Services.GetRequiredService<PostgresDbInitializer>();
+        postgresInitializer.InitializeDbAsync();
 
 
         app.Run();

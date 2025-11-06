@@ -12,15 +12,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\Script001 - CreateDatabase.sql" />
-    <EmbeddedResource Include="Scripts\Script002 - CreateTable.sql">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <PackageReference Include="dbup-postgresql" Version="6.1.5" />
+    <PackageReference Include="dbup-sqlserver" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="dbup-sqlserver" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
+    <None Remove="Scripts\Script001_CreateEmployee.sql" />
+    <Content Include="Postgres\Script001_CreateEmployee.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Postgres\Script002_CreateDepartment.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Scripts\Script001_CreateEmployee.sql" />
+    <None Remove="Scripts\Script002_CreateDepartment.sql" />
+    <EmbeddedResource Include="Scripts\Script002_CreateDepartment.sql" />
+    <None Remove="Scripts\Script003_CreateCustomer.sql" />
+    <EmbeddedResource Include="Scripts\Script003_CreateCustomer.sql" />
+    <None Remove="Scripts\Script004_AlterEmployee.sql" />
+    <EmbeddedResource Include="Scripts\Script004_AlterEmployee.sql" />
   </ItemGroup>
 
 </Project>

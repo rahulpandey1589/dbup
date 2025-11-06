@@ -2,30 +2,29 @@
 
 namespace db_up.Data
 {
-    public class DatabaseIntializer
+    public class DatabaseInitializer
     {
         private readonly string _connectionString;
 
-        public DatabaseIntializer(string connectionString)
+        public DatabaseInitializer(string connectionString)
         {
             _connectionString = connectionString;
-
         }
 
 
-        public void  IntializeDbAsync()
+        public void  InitializeDbAsync()
         {
             EnsureDatabase.For.SqlDatabase(_connectionString);
 
             var upgrader = DeployChanges.To.SqlDatabase(_connectionString)
-                .WithScriptsAndCodeEmbeddedInAssembly(typeof(DatabaseIntializer).Assembly)
+                .WithScriptsAndCodeEmbeddedInAssembly(typeof(DatabaseInitializer).Assembly)
                 .LogToConsole()
                 .Build();
-
+ 
 
             if (upgrader.IsUpgradeRequired())
             {
-                var result = upgrader.PerformUpgrade();
+                _ = upgrader.PerformUpgrade();
             }
         }
 
